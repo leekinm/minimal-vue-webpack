@@ -11,9 +11,9 @@
     "vue3",
     "webpack5"
   ],
-  "author": "",
+  "author": "https://github.com/leekinm",
   "license": "ISC",
-  "description": "",
+  "description": "Create a Vue3 and Webpack5 based project from zero to one",
   "devDependencies": {
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
