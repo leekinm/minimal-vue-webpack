@@ -13,4 +13,5 @@ module.exports = {
     compress: true, // for assets compress
     hot: true, // for HMR
   },
+  plugins: [],
 };

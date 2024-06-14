@@ -1,20 +1,23 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
+const { VueLoaderPlugin } = require("vue-loader");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const webpackConfigDev = require("./webpack.dev.js");
 const webpackConfigProd = require("./webpack.prod.js");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { VueLoaderPlugin } = require("vue-loader");
 
 const rootDir = path.resolve(__dirname, "..");
 const isProd = process.env.NODE_ENV === "production";
 
-module.exports = merge(isProd ? webpackConfigProd : webpackConfigDev, {
+const plugins = isProd ? webpackConfigProd.plugins : webpackConfigDev.plugins;
+
+const config = merge(isProd ? webpackConfigProd : webpackConfigDev, {
   entry: path.join(rootDir, "src/main.js"),
   module: {
     rules: [
       {
-        test: /.vue$/,
+        test: /\.vue$/,
         use: ["vue-loader"],
       },
       {
@@ -23,14 +26,18 @@ module.exports = merge(isProd ? webpackConfigProd : webpackConfigDev, {
       },
       {
         test: /\.css$/i,
-        use: ["vue-style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
+  // `webpack-merge` doesn't merge multiple plugins,
+  // its behavior likes `Object.assign`.
   plugins: [
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(rootDir, "public/index.html"),
     }),
-  ],
+  ].concat(plugins),
 });
+
+module.exports = config;
