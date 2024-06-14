@@ -1,6 +1,7 @@
 const fsPromises = require("fs/promises");
-const path = require("path");
-const chalk = require('chalk')
+const MyChalk = require("../utils/myChalk.js");
+
+const myChalk = new MyChalk();
 
 const myPlugin = "ClearDirectoryWebpackPlugin";
 module.exports = class CleanWebpackPlugin {
@@ -25,21 +26,20 @@ module.exports = class CleanWebpackPlugin {
       } else {
         this._clean(absolutePath);
       }
-      return true
+      return true;
     });
   }
   async _logShouldRemoveFiles(path, assetsInfo) {
     const filenames = [...assetsInfo.keys()];
     const files = await fsPromises.readdir(path, { recursive: true });
     // debugger;
-    let i = 1
-    console.log(chalk.white.bold('Info, files inside output directory:'))
+    let i = 1;
+    myChalk.white.bold.log("Info, files inside output directory:");
     for (const file of files) {
       if (!filenames.includes(file)) {
-        console.log(`<i> ${chalk.bold.cyan(file)} will be removed\r`);
+        console.log(`<i> ${myChalk.bold.cyan.set(file)} will be removed\r`);
       }
-      if (i++ === files.length)
-        console.log()
+      if (i++ === files.length) console.log();
     }
   }
   async _clean(path) {
