@@ -1,5 +1,5 @@
 const fsPromises = require("fs/promises");
-const MyChalk = require("../utils/myChalk.js");
+const MyChalk = require("#mychalk");
 
 const myChalk = new MyChalk();
 

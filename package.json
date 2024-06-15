@@ -12,6 +12,9 @@
     "vue3",
     "webpack5"
   ],
+  "imports": {
+    "#mychalk": "./config/utils/myChalk.js"
+  },
   "author": "https://github.com/leekinm",
   "license": "ISC",
   "description": "Create a Vue3 and Webpack5 based project from zero to one",
